@@ -2,6 +2,7 @@
 
 namespace App\Http\Repositories;
 
+use App\Models\Contact;
 use App\Models\ContactGroup;
 
 class ContactGroupRepo
@@ -14,13 +15,15 @@ class ContactGroupRepo
     }
 
     // get one group 
-    public static function show()
+    public static function show(string|int $id)
     {
+        return ContactGroup::findOrFail($id);
     }
 
     // get all contats from a single group
-    public static function getContactsOfGroup()
+    public static function showContactsOfGroup(string|int $id)
     {
+        return ContactGroup::findOrFail($id)->contacts;
     }
 
     // edit a group

@@ -11,4 +11,14 @@ class ContactGroupController extends Controller
     {
         return ContactGroupRepo::all();
     }
+
+    public function show(string $id)
+    {
+        return ContactGroupRepo::show($id);
+    }
+
+    public function showContactsOfGroup(string $id)
+    {
+        return ContactGroupRepo::showContactsOfGroup($id);
+    }
 }

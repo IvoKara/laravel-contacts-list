@@ -35,4 +35,10 @@ Route::middleware([
     })->name('dashboard');
 });
 
-Route::get('/contacts-groups', [ContactGroupController::class, 'index'])->name('contacts-groups');
+Route::controller(ContactGroupController::class)
+    ->prefix("contacts-groups")
+    ->group(function () {
+        Route::get('/', 'index')->name('contacts-groups');
+        Route::get('/{id}', 'show')->name('contacts-groups.show');
+        Route::get('/{id}/contacts', 'showContactsOfGroup')->name('contacts-groups.show.contacts');
+    });

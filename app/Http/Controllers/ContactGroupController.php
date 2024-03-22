@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Repositories\ContactGroupRepo;
-use App\Http\Requests\StoreContactGroupRequest;
+use App\Http\Requests\ContactGroupRequest;
 use App\Models\Contact;
 use App\Models\ContactGroup;
 use Illuminate\Http\Request;
@@ -16,7 +16,7 @@ class ContactGroupController extends Controller
      */
     public function index()
     {
-        // Inertia::render("ContanctGroup")
+        // Inertia::render("ContactGroup/Index",
         return ContactGroup::all();
     }
 
@@ -37,17 +37,21 @@ class ContactGroupController extends Controller
     /**
      * Store newly created contact group.
      */
-    public function store(StoreContactGroupRequest $request)
+    public function store(ContactGroupRequest $request)
     {
         ContactGroup::create($request->only('name'));
     }
 
     /**
-     * Display the specified contact group.
+     * Display the specified contact group with the contacts in it.
      */
     public function show(ContactGroup $group)
     {
-        return $group;
+        // return Inertia::render("ContactGroup/Show", 
+        return [
+            'group' => $group,
+            'contacts' => $group->contacts
+        ];
     }
 
     /**
@@ -55,6 +59,7 @@ class ContactGroupController extends Controller
      */
     public function showContactsOfGroup(ContactGroup $group)
     {
+        // return Inertia::render("ContactGroup/Show", $group);
         return $group->contacts;
     }
 
@@ -74,7 +79,7 @@ class ContactGroupController extends Controller
      * Update the specified contact group in storage.
      * Updates only name at this time.
      */
-    public function update(StoreContactGroupRequest $request, ContactGroup $group)
+    public function update(ContactGroupRequest $request, ContactGroup $group)
     {
         $group->update($request->only('name'));
     }

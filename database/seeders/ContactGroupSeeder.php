@@ -20,7 +20,6 @@ class ContactGroupSeeder extends Seeder
 
     public function seed()
     {
-        DB::table('contacts_groups')->truncate();
         ContactGroup::factory(5)->create();
     }
 }

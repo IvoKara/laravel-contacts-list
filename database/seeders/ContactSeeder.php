@@ -22,7 +22,7 @@ class ContactSeeder extends Seeder
         $groupIds = ContactGroup::all()->pluck('id');
 
         foreach ($groupIds as $id) {
-            Contact::factory(5)->create([
+            Contact::factory(7)->create([
                 'group_id' => $id
             ]);
         }

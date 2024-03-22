@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('contacts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('group_id')->references('id')->on('contacts_groups');
+            $table->foreignId('group_id')->nullable()->references('id')->on('contacts_groups');
             $table->string('name')->required();
             $table->string('nickname')->required();
             $table->string('phone')->unique()->required();

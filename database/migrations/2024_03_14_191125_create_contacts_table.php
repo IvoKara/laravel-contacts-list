@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('contacts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('group_id')->nullable()->references('id')->on('contacts_groups');
+            // TODO: this should be split into two separate alpha field
             $table->string('name')->required();
             $table->string('nickname')->required();
             $table->string('phone')->unique()->required();

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ContactGroupController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -35,10 +36,11 @@ Route::middleware([
     })->name('dashboard');
 });
 
+Route::resource('contacts', ContactController::class);
+
 Route::resource('contacts-groups', ContactGroupController::class)->parameters([
     'contacts-groups' => 'group'
 ]);
-
 Route::prefix("contacts-groups")->group(function () {
     Route::controller(ContactGroupController::class)->group(function () {
         Route::get('/{id}/contacts', 'showContactsOfGroup')->name('contacts-groups.show.contacts');

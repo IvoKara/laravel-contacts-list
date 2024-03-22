@@ -35,10 +35,12 @@ Route::middleware([
     })->name('dashboard');
 });
 
-Route::controller(ContactGroupController::class)
-    ->prefix("contacts-groups")
-    ->group(function () {
-        Route::get('/', 'index')->name('contacts-groups');
-        Route::get('/{id}', 'show')->name('contacts-groups.show');
+Route::resource('contacts-groups', ContactGroupController::class)->parameters([
+    'contacts-groups' => 'group'
+]);
+
+Route::prefix("contacts-groups")->group(function () {
+    Route::controller(ContactGroupController::class)->group(function () {
         Route::get('/{id}/contacts', 'showContactsOfGroup')->name('contacts-groups.show.contacts');
     });
+});

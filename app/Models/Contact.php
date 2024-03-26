@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Laravel\Scout\Searchable;
 
 class Contact extends Model
 {
     use HasFactory;
+    use Searchable;
 
     protected $table = 'contacts';
 
@@ -17,7 +19,6 @@ class Contact extends Model
         "nickname",
         "email",
         "phone",
-        "group_id"
     ];
 
     public function groups(): BelongsToMany

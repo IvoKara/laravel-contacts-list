@@ -22,21 +22,26 @@ class ContactRequest extends FormRequest
      */
     public function rules(): array
     {
-        // if (request()->routeIs('contacts.create')) 
+        // $sometimes = request()->routeIs('contacts.store') || request()->method() === "PUT" ? 'sometimes' : ''
+
+        $required = Rule::requiredIf(
+            request()->routeIs('contacts.store') || request()->method() === "PUT"
+        );
+
         $unique = Rule::unique('contacts');
 
         if (request()->routeIs('contacts.update')) {
-            $unique = $unique->ignore(request()->get('id'));
+            $unique = $unique->ignore(request()->route('contact')->id);
         }
 
         $phone_regex = "/^([0-9\s\.\-\+\(\)]*)$/";
 
         return [
             // TODO: this should be split into two separate alpha field
-            "name" => ['required', 'string', 'min:3', 'max:255'],
-            "nickname" => ['required', 'alpha_dash', 'min:3', 'max:255', $unique],
-            "email" => ['required', 'email', $unique],
-            "phone" => ['required', "regex:$phone_regex", 'min:10', $unique],
+            "name" => [$required, 'min:3', 'max:255', 'string'],
+            "nickname" => [$required, 'min:3', 'max:255', 'alpha_dash', $unique],
+            "email" => [$required, 'email', $unique],
+            "phone" => [$required, 'min:10', "regex:$phone_regex", $unique],
             "group_id" => ['nullable', 'integer']
         ];
     }

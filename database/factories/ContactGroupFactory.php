@@ -22,7 +22,7 @@ class ContactGroupFactory extends Factory
         $minThreeChars = fn ($word) => strlen($word) >= 3;
 
         return [
-            'name' => $faker->validate($minThreeChars)->word(),
+            'name' => $faker->valid($minThreeChars)->word(),
         ];
     }
 }

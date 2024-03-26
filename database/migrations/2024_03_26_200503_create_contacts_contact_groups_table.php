@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('contacts', function (Blueprint $table) {
+        Schema::create('contacts_contact_groups', function (Blueprint $table) {
             $table->id();
-            // TODO: this should be split into two separate alpha field
-            $table->string('name')->required();
-            $table->string('nickname')->required();
-            $table->string('phone')->unique()->required();
-            $table->string('email')->unique()->required();
+            $table->foreignId('contact_id')->references('id')->on('contacts');
+            $table->foreignId('contact_group_id')->references('id')->on('contacts_groups');
             $table->timestamps();
         });
     }
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('contacts');
+        Schema::dropIfExists('contacts_contact_groups');
     }
 };

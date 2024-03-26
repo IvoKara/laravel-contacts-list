@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class ContactGroup extends Model
 {
@@ -15,8 +15,13 @@ class ContactGroup extends Model
         "name"
     ];
 
-    public function contacts(): HasMany
+    public function contacts(): BelongsToMany
     {
-        return $this->hasMany(Contact::class, 'group_id');
+        return $this->belongsToMany(
+            Contact::class,
+            'contacts_contact_groups',
+            'contact_group_id',
+            'contact_id'
+        );
     }
 }

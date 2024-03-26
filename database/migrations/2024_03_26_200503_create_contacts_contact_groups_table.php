@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('contact_id')->references('id')->on('contacts');
             $table->foreignId('contact_group_id')->references('id')->on('contacts_groups');
-            $table->timestamps();
         });
     }
 

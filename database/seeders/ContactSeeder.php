@@ -19,12 +19,14 @@ class ContactSeeder extends Seeder
 
     public function seed()
     {
-        $groupIds = ContactGroup::all()->pluck('id');
+        $contacts = Contact::factory(30)->create();
 
-        foreach ($groupIds as $id) {
-            Contact::factory(7)->create([
-                'group_id' => $id
-            ]);
+        $group_ids = ContactGroup::all()->pluck('id');
+
+        foreach ($contacts->random(20) as $contact) {
+            $contact->groups()->attach(
+                $group_ids->random(rand(1, 3))
+            );
         }
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ContactGroupRequest extends FormRequest
 {
@@ -21,8 +22,13 @@ class ContactGroupRequest extends FormRequest
      */
     public function rules(): array
     {
+        $unique = Rule::unique('contacts_groups');
+
+        if (request()->routeIs('contacts-groups.update')) {
+            $unique = $unique->ignore(request()->route('group')->id);
+        }
         return [
-            "name" => 'required|string|min:3|max:255|unique:contacts_groups',
+            "name" => ['required', 'min:3', 'max:255', 'string', $unique],
             "contacts" => 'array|nullable'
         ];
     }

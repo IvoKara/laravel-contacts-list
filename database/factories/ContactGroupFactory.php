@@ -19,8 +19,10 @@ class ContactGroupFactory extends Factory
     {
         $faker = FakerFactory::create();
 
+        $minThreeChars = fn ($word) => strlen($word) >= 3;
+
         return [
-            'name' => $faker->word(),
+            'name' => $faker->validate($minThreeChars)->word(),
         ];
     }
 }

@@ -20,9 +20,11 @@ class ContactFactory extends Factory
     {
         $faker = FakerFactory::create();
 
+        $minThreeChars = fn ($word) => strlen($word) >= 3;
+
         return [
             'name' => $faker->name(),
-            'nickname' => $faker->word(),
+            'nickname' => $faker->valid($minThreeChars)->word(),
             'phone' => $faker->phoneNumber(),
             'email' => $faker->email(),
         ];

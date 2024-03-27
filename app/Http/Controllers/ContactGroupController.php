@@ -20,11 +20,6 @@ class ContactGroupController extends Controller
         return ContactGroup::all();
     }
 
-    // public function test()
-    // {
-    //     return Inertia::render("Test");
-    // }
-
     /**
      * Show the page for creating new contact groups.
      */
@@ -32,6 +27,7 @@ class ContactGroupController extends Controller
     {
         // do not have a view yet
         //return Inertia::render("ContactGroup/Create");
+        return Inertia::render('Test');
     }
 
     /**
@@ -39,7 +35,11 @@ class ContactGroupController extends Controller
      */
     public function store(ContactGroupRequest $request)
     {
-        ContactGroup::create($request->only('name'));
+        // $contact_ids = [1, 2, 4];
+
+        $group = ContactGroup::create($request->only('name'));
+
+        // $group->contacts()->sync($contact_ids);
     }
 
     /**
@@ -68,10 +68,17 @@ class ContactGroupController extends Controller
      */
     public function edit(ContactGroup $group)
     {
+        /** @var Collection<Contact> */
+        $results = [];
+
+        if (request('contact') !== null)
+            $results = Contact::search(request('contact'))->get();
+        // dd(Contact::search(request('contact'))->get());
         // do not have a view yet
         // return Inertia::render("ContactGroup/Edit");
-        return Inertia::render("Test2", [
-            "group" => $group
+        return Inertia::render('ContactGroup/Edit', [
+            "group" => $group,
+            'search' => $results,
         ]);
     }
 

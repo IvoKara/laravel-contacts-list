@@ -14,6 +14,7 @@ const name = ref(props.group.name)
 const url = computed(() => `/contacts-groups/${props.group.id}`)
 
 const typeSearch = ref('')
+const selectedContacts = ref([])
 
 watchDebounced(typeSearch, (newSearch) => {
     router.get(`${url.value}/edit?contact=${newSearch}`, {}, {
@@ -55,17 +56,28 @@ function destroy() {
         <div class="py-4">
             <label for="contacts" class="block">Contacts:</label>
             <input id="contacts"  v-model="typeSearch">
+            <p>Selected: {{ selectedContacts }}</p>
 
-            <ul class="grid gap-2">
-                <li v-for="result in search" class="p-4 rounded-lg border border-gray-200 shadow-sm flex justify-between gap-4">
-                    <span class="font-bold">
-                        {{ result.name }} <span class="text-gray-400 font-normal">({{ result.nickname }})</span>
-                    </span>
-
-                    <div class="text-sm text-gray-500 flex flex-col gap-2 items-end">
-                        <span>{{ result.email }}</span>
-                        <span>{{ result.phone }}</span>
-                    </div>
+            <ul class="grid mt-4 gap-2">
+                <li v-for="result in search">
+                    <label 
+                        :for="result.nickname" 
+                        class="cursor-pointer p-4 rounded-lg border border-gray-200 shadow-sm flex justify-between gap-4"
+                        :class="{'bg-gray-200': selectedContacts.includes(result.id)}"
+                    >
+                        <input
+                            class="hidden" type="checkbox"
+                            :id="result.nickname" :value="result.id"
+                            v-model="selectedContacts"
+                        >
+                        <span class="font-bold">
+                            {{ result.name }} <span class="text-gray-400 font-normal">({{ result.nickname }})</span>
+                        </span>
+                        <div class="text-sm text-gray-500 flex flex-col gap-2 items-end">
+                            <span>{{ result.email }}</span>
+                            <span>{{ result.phone }}</span>
+                        </div>
+                    </label>
                 </li>
             </ul>
         </div>

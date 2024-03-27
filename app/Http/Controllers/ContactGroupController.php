@@ -25,8 +25,15 @@ class ContactGroupController extends Controller
      */
     public function create()
     {
+        $results = [];
+
+        if (request('search') !== null)
+            $results = Contact::search(request('search'))->get();
+
         // do not have a finished view yet
-        return Inertia::render("ContactsGroups/Create");
+        return Inertia::render("ContactsGroups/Create", [
+            'search' => $results
+        ]);
     }
 
     /**
@@ -34,11 +41,13 @@ class ContactGroupController extends Controller
      */
     public function store(ContactGroupRequest $request)
     {
-        // $contact_ids = [1, 2, 4];
+        $group = ContactGroup::create([
+            'name' => $request->validated('name')
+        ]);
 
-        $group = ContactGroup::create($request->only('name'));
+        $group->contacts()->attach($request->validated('contacts'));
 
-        // $group->contacts()->sync($contact_ids);
+        return redirect('/');
     }
 
     /**

@@ -25,9 +25,8 @@ class ContactGroupController extends Controller
      */
     public function create()
     {
-        // do not have a view yet
-        //return Inertia::render("ContactGroup/Create");
-        return Inertia::render('Test');
+        // do not have a finished view yet
+        return Inertia::render("ContactsGroups/Create");
     }
 
     /**
@@ -73,10 +72,9 @@ class ContactGroupController extends Controller
 
         if (request('contact') !== null)
             $results = Contact::search(request('contact'))->get();
-        // dd(Contact::search(request('contact'))->get());
-        // do not have a view yet
-        // return Inertia::render("ContactGroup/Edit");
-        return Inertia::render('ContactGroup/Edit', [
+
+        // do not have a finished view yet
+        return Inertia::render('ContactsGroups/Edit', [
             "group" => $group,
             'search' => $results,
         ]);

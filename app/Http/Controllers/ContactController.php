@@ -23,9 +23,8 @@ class ContactController extends Controller
      */
     public function create()
     {
-        // do not have a view yet
-        //return Inertia::render("Contact/Create");
-        return Inertia::render("Test4");
+        // do not have a finished view yet
+        return Inertia::render("Contact/Create");
     }
 
     /**
@@ -49,9 +48,8 @@ class ContactController extends Controller
      */
     public function edit(Contact $contact)
     {
-        // do not have a view yet
-        // return Inertia::render("Contact/Edit");
-        return Inertia::render("Test3", [
+        // do not have a finished view yet
+        return Inertia::render("Contact/Edit", [
             "contact" => $contact
         ]);
     }
